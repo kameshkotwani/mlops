@@ -1,0 +1,73 @@
+schema: '2.0'
+stages:
+  data_download:
+    cmd: python mlops/download_csv.py
+    deps:
+    - path: mlops/download_csv.py
+      hash: md5
+      md5: 99e6604f36985b203bd0a64ebe826346
+      size: 541
+    outs:
+    - path: data/external
+      hash: md5
+      md5: 207b9fa45c0e17579539b425c7eb1b93.dir
+      size: 3768210
+      nfiles: 1
+  data_preprocess:
+    cmd: python mlops/create_datasets.py
+    deps:
+    - path: data/external
+      hash: md5
+      md5: 207b9fa45c0e17579539b425c7eb1b93.dir
+      size: 3768210
+      nfiles: 1
+    - path: mlops/create_datasets.py
+      hash: md5
+      md5: 1a853442516f52bde624ceaf9e534b68
+      size: 1145
+    outs:
+    - path: data/raw
+      hash: md5
+      md5: fb326d2eec197669f9638afde28356bf.dir
+      size: 827973
+      nfiles: 2
+  data_transform:
+    cmd: python mlops/data_preprocessing.py
+    deps:
+    - path: data/raw
+      hash: md5
+      md5: fb326d2eec197669f9638afde28356bf.dir
+      size: 827973
+      nfiles: 2
+    - path: mlops/create_datasets.py
+      hash: md5
+      md5: 1a853442516f52bde624ceaf9e534b68
+      size: 1145
+    - path: mlops/data_preprocessing.py
+      hash: md5
+      md5: 2f8eef9d75dcb0f891ad9cdcd09feac1
+      size: 2848
+    outs:
+    - path: data/processed
+      hash: md5
+      md5: e38399fb0ea14943236f77b352df5875.dir
+      size: 572486
+      nfiles: 2
+  feature_engineering:
+    cmd: python mlops/feature_engineering.py
+    deps:
+    - path: data/processed
+      hash: md5
+      md5: e38399fb0ea14943236f77b352df5875.dir
+      size: 572486
+      nfiles: 2
+    - path: mlops/feature_engineering.py
+      hash: md5
+      md5: c875aa22bd9e80d5afa40c0a8bd0544a
+      size: 1361
+    outs:
+    - path: data/interim
+      hash: md5
+      md5: 2e4619e483e11c325537a18d2c734de9.dir
+      size: 124576916
+      nfiles: 2

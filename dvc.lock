@@ -71,3 +71,42 @@ stages:
       md5: 2e4619e483e11c325537a18d2c734de9.dir
       size: 124576916
       nfiles: 2
+  model_building:
+    cmd: python mlops/train.py
+    deps:
+    - path: data/interim
+      hash: md5
+      md5: 2e4619e483e11c325537a18d2c734de9.dir
+      size: 124576916
+      nfiles: 2
+    - path: mlops/train.py
+      hash: md5
+      md5: ba265423d0b30646762a5f2813ff3753
+      size: 512
+    outs:
+    - path: models/gbc_model.pkl
+      hash: md5
+      md5: 478f453f906d8c04e4017bed4fc067b4
+      size: 67726
+  model_prediction:
+    cmd: python mlops/predict.py
+    deps:
+    - path: mlops/predict.py
+      hash: md5
+      md5: 78fdb54002984439fa0f9323c8ac0de1
+      size: 667
+    - path: models/gbc_model.pkl
+      hash: md5
+      md5: 478f453f906d8c04e4017bed4fc067b4
+      size: 67726
+  model_evaluation:
+    cmd: python mlops/evaluation.py
+    deps:
+    - path: mlops/evaluation.py
+      hash: md5
+      md5: 9d209f191f89443b3123ed3b278c40f6
+      size: 706
+    - path: models/gbc_model.pkl
+      hash: md5
+      md5: 478f453f906d8c04e4017bed4fc067b4
+      size: 67726

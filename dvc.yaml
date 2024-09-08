@@ -32,3 +32,17 @@ stages:
       - data/processed
     outs:
       - data/interim
+  model_building:
+    cmd: python mlops/train.py
+    deps:
+      - mlops/train.py
+      - data/interim
+    outs:
+      - models/gbc_model.pkl:
+          persist: true
+
+  model_evaluation:
+    cmd: python mlops/evaluation.py
+    deps:
+      - mlops/evaluation.py
+      - models/gbc_model.pkl

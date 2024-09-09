@@ -5,8 +5,8 @@ stages:
     deps:
     - path: mlops/download_csv.py
       hash: md5
-      md5: 92dca181ac03ea36f763f1798868a394
-      size: 583
+      md5: 6e43a8ed87f67d458c5186102d963a47
+      size: 577
     params:
       params.yaml:
         data_download.url: 
@@ -40,7 +40,7 @@ stages:
     deps:
     - path: data/raw
       hash: md5
-      md5: 03b3b604b1f92a17191a7fc947e576d6.dir
+      md5: 39d90c3f30ab1147112a14b0d7af0ce6.dir
       size: 827973
       nfiles: 2
     - path: mlops/data_preprocessing.py
@@ -50,7 +50,7 @@ stages:
     outs:
     - path: data/processed
       hash: md5
-      md5: 054e24fa2928240846e1210a1f2c54ac.dir
+      md5: a4e7f21421093814ea0fea22cf22c3fc.dir
       size: 572486
       nfiles: 2
   feature_engineering:
@@ -58,7 +58,7 @@ stages:
     deps:
     - path: data/processed
       hash: md5
-      md5: 054e24fa2928240846e1210a1f2c54ac.dir
+      md5: a4e7f21421093814ea0fea22cf22c3fc.dir
       size: 572486
       nfiles: 2
     - path: mlops/feature_engineering.py
@@ -72,7 +72,7 @@ stages:
     outs:
     - path: data/interim
       hash: md5
-      md5: f05acafeb33084a43fae0a85119214f6.dir
+      md5: f0b3f5d6a01c6d3152c4a38c7b65a4c9.dir
       size: 155713916
       nfiles: 2
   model_building:
@@ -80,7 +80,7 @@ stages:
     deps:
     - path: data/interim
       hash: md5
-      md5: f05acafeb33084a43fae0a85119214f6.dir
+      md5: f0b3f5d6a01c6d3152c4a38c7b65a4c9.dir
       size: 155713916
       nfiles: 2
     - path: mlops/train.py
@@ -93,8 +93,8 @@ stages:
     outs:
     - path: models/gbc_model.pkl
       hash: md5
-      md5: a77c3617eb1ff465f33ba153791443c7
-      size: 85054
+      md5: 289a70673e0a187117c7921ad97202b3
+      size: 83614
   model_prediction:
     cmd: python mlops/predict.py
     deps:
@@ -115,12 +115,12 @@ stages:
       size: 975
     - path: models/gbc_model.pkl
       hash: md5
-      md5: a77c3617eb1ff465f33ba153791443c7
-      size: 85054
+      md5: 289a70673e0a187117c7921ad97202b3
+      size: 83614
     outs:
     - path: reports/metrics_gbc.json
       hash: md5
-      md5: 1421765ff0c0ea61f672493f7f29046f
+      md5: 68345db017991cdc9033da3be9049026
       size: 336
   create_datasets:
     cmd: python mlops/create_datasets.py
@@ -132,15 +132,15 @@ stages:
       nfiles: 1
     - path: mlops/create_datasets.py
       hash: md5
-      md5: db91c3bd0bb53c199f80dbae80f3220e
-      size: 1311
+      md5: 1627a0f0fced995ada21b61079daf537
+      size: 1788
     params:
       params.yaml:
-        create_datasets.random_state: 42
-        create_datasets.test_size: 0.3
+        create_datasets.random_state: 47
+        create_datasets.test_size: 0.5
     outs:
     - path: data/raw
       hash: md5
-      md5: 03b3b604b1f92a17191a7fc947e576d6.dir
+      md5: 39d90c3f30ab1147112a14b0d7af0ce6.dir
       size: 827973
       nfiles: 2

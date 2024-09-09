@@ -8,7 +8,6 @@ import yaml
 # create the directory even if it exists
 os.makedirs(config.EXTERNAL_DATA_DIR,exist_ok=True)
 
-
 DOWNLOAD_PARAMS = config.get_parameters('data_download')
 
 response = requests.get(DOWNLOAD_PARAMS.get('url'))
@@ -19,5 +18,5 @@ if response.status_code == 200:
         print("CSV file downloaded successfully.")
 else:
     response.raise_for_status()
-    
+
     

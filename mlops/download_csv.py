@@ -3,11 +3,15 @@ import requests
 import os
 import config
 import time
+import yaml
 
+# create the directory even if it exists
 os.makedirs(config.EXTERNAL_DATA_DIR,exist_ok=True)
 
-url = "https://raw.githubusercontent.com/campusx-official/jupyter-masterclass/main/tweet_emotions.csv"
-response = requests.get(url)
+
+DOWNLOAD_PARAMS = config.get_parameters('data_download')
+
+response = requests.get(DOWNLOAD_PARAMS.get('url'))
 print(response)
 if response.status_code == 200:
     with open(config.EXTERNAL_DATA_DIR / "tweet_emotions.csv", "wb") as file:
@@ -15,4 +19,5 @@ if response.status_code == 200:
         print("CSV file downloaded successfully.")
 else:
     response.raise_for_status()
+    
     

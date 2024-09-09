@@ -3,15 +3,20 @@ stages:
     cmd: python mlops/download_csv.py
     deps:
       - mlops/download_csv.py
+    params:
+      - data_download.url
     outs:
       - data/external:
           persist: true      
 
-  data_preprocess:
+  create_datasets:
     cmd: python mlops/create_datasets.py
     deps:
       - mlops/create_datasets.py
       - data/external
+    params:
+      - create_datasets.test_size
+      - create_datasets.random_state
     outs:
       - data/raw:
           persist: true    
@@ -27,16 +32,22 @@ stages:
 
   feature_engineering:
     cmd: python mlops/feature_engineering.py
+    params:
+      - feature_engineering
     deps:
       - mlops/feature_engineering.py
       - data/processed
     outs:
       - data/interim
+
   model_building:
     cmd: python mlops/train.py
     deps:
       - mlops/train.py
       - data/interim
+    params:
+      - train.gbc_n_estimators
+
     outs:
       - models/gbc_model.pkl:
           persist: true
@@ -46,3 +57,5 @@ stages:
     deps:
       - mlops/evaluation.py
       - models/gbc_model.pkl
+    metrics:
+      - reports/metrics_gbc.json

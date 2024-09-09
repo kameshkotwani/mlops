@@ -2,15 +2,15 @@ data_download:
   url: https://raw.githubusercontent.com/campusx-official/jupyter-masterclass/main/tweet_emotions.csv
 
 # nothing to put right now
-data_ingestion: ~
+data_preprocessing: ~
 
 feature_engineering:
-  cv_max_features: 6000
+  cv_max_features: 7500
 
 create_datasets:
-  test_size: 0.2
+  test_size: 0.3
   random_state: 42
 
 train:
-  gbc_n_estimators: 50
+  gbc_n_estimators: 64
 

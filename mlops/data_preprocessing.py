@@ -76,7 +76,7 @@ def normalize_text(df):
 
 
 # creating processed dir
-os.makedirs(config.PROCESSED_DATA_DIR)
+os.makedirs(config.PROCESSED_DATA_DIR,exist_ok=True)
 
 
 print("Processing the datasets train and test")

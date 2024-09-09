@@ -3,6 +3,7 @@ import config
 import pickle
 import pandas as pd
 import numpy as np
+import json
 from sklearn.metrics import classification_report
 # loading the model
 try:
@@ -24,5 +25,11 @@ y_true = np.array(X_test.iloc[:,-1].values)
 
 print(classification_report(y_true,predictions,output_dict=True))
 
+# Generate classification report as a dictionary
+report_dict = classification_report(y_true, predictions)
+
+# Save classification report to metrics.json
+with open(config.REPORTS_DIR / "metrics_gbc.json", 'w') as file:
+    json.dump(report_dict, file)
 
 

@@ -8,7 +8,7 @@ feature_engineering:
   cv_max_features: 7500
 
 create_datasets:
-  test_size: 0.2
+  test_size: 0.3
   random_state: 47
 
 train:

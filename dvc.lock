@@ -5,8 +5,8 @@ stages:
     deps:
     - path: mlops/download_csv.py
       hash: md5
-      md5: 6e43a8ed87f67d458c5186102d963a47
-      size: 577
+      md5: a107eec41156129c5f431e52b83b8470
+      size: 807
     params:
       params.yaml:
         data_download.url: 
@@ -45,8 +45,8 @@ stages:
       nfiles: 2
     - path: mlops/data_preprocessing.py
       hash: md5
-      md5: 7ea4845873d88d7176a4b8639ee09d53
-      size: 2862
+      md5: 35e68ded5ba66ff6d1e23be7e5c89c1f
+      size: 3231
     outs:
     - path: data/processed
       hash: md5
@@ -63,8 +63,8 @@ stages:
       nfiles: 2
     - path: mlops/feature_engineering.py
       hash: md5
-      md5: 1632977a596a8eee3804cde38962105d
-      size: 1476
+      md5: bbdcd610381cc97491c883dc212afe98
+      size: 2022
     params:
       params.yaml:
         feature_engineering:
@@ -85,16 +85,16 @@ stages:
       nfiles: 2
     - path: mlops/train.py
       hash: md5
-      md5: 2ffa22c92525bede6bc8f1c76a63cc00
-      size: 602
+      md5: 86e77bb7bd2702066ee5e05affa68d44
+      size: 897
     params:
       params.yaml:
         train.gbc_n_estimators: 64
     outs:
     - path: models/gbc_model.pkl
       hash: md5
-      md5: 2e93dbb206dd602b89226e7b300dcbac
-      size: 85630
+      md5: 7073a53f24ecadb60a4a2c6d83c7aa39
+      size: 86206
   model_prediction:
     cmd: python mlops/predict.py
     deps:
@@ -111,12 +111,12 @@ stages:
     deps:
     - path: mlops/evaluation.py
       hash: md5
-      md5: 7b26f7e8a5bf49dcf6de3dd685e1e459
-      size: 975
+      md5: eab404e0daa5a12db3856783f262b7c4
+      size: 1046
     - path: models/gbc_model.pkl
       hash: md5
-      md5: 2e93dbb206dd602b89226e7b300dcbac
-      size: 85630
+      md5: 7073a53f24ecadb60a4a2c6d83c7aa39
+      size: 86206
     outs:
     - path: reports/metrics_gbc.json
       hash: md5

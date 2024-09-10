@@ -1,6 +1,9 @@
 from pathlib import Path
+import pathlib
 import yaml
 import logging
+import pandas as pd
+import os
 
 # Paths
 PROJ_ROOT = Path(__file__).resolve().parents[1]
@@ -27,7 +30,7 @@ def get_parameters(param=None):
 def create_logger(level='DEBUG', file_name ="no file") -> logging.Logger:
     # configure logger
     logger = logging.getLogger(file_name)
-    logger.setLevel('DEBUG')
+    logger.setLevel(level)
 
     console_handler   = logging.StreamHandler()
     console_handler.setLevel('DEBUG')
@@ -36,3 +39,8 @@ def create_logger(level='DEBUG', file_name ="no file") -> logging.Logger:
     
     logger.addHandler(console_handler)
     return logger
+
+
+def read_data(file_path:pathlib) -> pd.DataFrame:
+    """returns the specified csv"""
+    return pd.read_csv(file_path)

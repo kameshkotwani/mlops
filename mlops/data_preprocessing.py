@@ -9,12 +9,14 @@ from nltk.stem import SnowballStemmer, WordNetLemmatizer
 from sklearn.feature_extraction.text import CountVectorizer
 import numpy as np
 import os
-
+logger = config.create_logger(file_name=os.path.basename(__file__))
 # read the train and test csv file
-train_raw = pd.read_csv(config.RAW_DATA_DIR / "train.csv")
+logger.debug("reading train data")
+train_raw = config.read_data(config.RAW_DATA_DIR / "train.csv")
 assert not train_raw.empty, "train_raw does not have any data"
 
-test_raw = pd.read_csv(config.RAW_DATA_DIR / "test.csv")
+logger.debug("reading test data")
+test_raw = config.read_data(config.RAW_DATA_DIR / "test.csv")
 assert not test_raw.empty, "test_raw does not have any data"
 
 nltk.download('wordnet')
@@ -75,19 +77,27 @@ def normalize_text(df):
     return df
 
 
-# creating processed dir
-os.makedirs(config.PROCESSED_DATA_DIR,exist_ok=True)
+def data_preprocessing():
+    """ pre-processes the data and saves it"""
+    # creating processed dir
+    os.makedirs(config.PROCESSED_DATA_DIR,exist_ok=True)
 
 
-print("Processing the datasets train and test")
-train_data = normalize_text(train_raw)
-train_data.fillna('empty',inplace=True)
+    logger.debug("Processing the datasets train and test")
+    train_data = normalize_text(train_raw)
+    train_data.fillna('empty',inplace=True)
 
-print("saving train_processed.csv")
-train_data.to_csv(config.PROCESSED_DATA_DIR / "train_processed.csv",index=False)
+    logger.debug("saving train_processed.csv")
+    train_data.to_csv(config.PROCESSED_DATA_DIR / "train_processed.csv",index=False)
 
-test_data = normalize_text(test_raw)
+    test_data = normalize_text(test_raw)
 
-test_data.fillna('empty',inplace=True)
-print("saving test_processed.csv")
-test_data.to_csv(config.PROCESSED_DATA_DIR / "test_processed.csv",index=False)
+    test_data.fillna('empty',inplace=True)
+    logger.debug("saving test_processed.csv")
+    test_data.to_csv(config.PROCESSED_DATA_DIR / "test_processed.csv",index=False)
+
+def main():
+    data_preprocessing()
+
+if __name__ == "__main__":
+    main()

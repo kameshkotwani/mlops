@@ -3,7 +3,7 @@ import pandas as pd
 import os
 import config
 
-from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.feature_extraction.text import CountVectorizer
 
 logger = config.create_logger(file_name=os.path.basename(__file__))
 # get the parameters dict
@@ -29,8 +29,8 @@ def feature_engineer():
     y_test = test_data['sentiment'].values
 
     logger.debug("applying transformations")
-    # Apply Bag of Words (TfidfVectorizer)
-    vectorizer = TfidfVectorizer(max_features=FE_PARAMS.get('cv_max_features'))
+    # Apply Bag of Words (Count Vectorizer )
+    vectorizer = CountVectorizer(max_features=FE_PARAMS.get('cv_max_features'))
 
     # Fit the vectorizer on the training data and transform it
     X_train_bow = vectorizer.fit_transform(X_train)

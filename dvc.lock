@@ -34,8 +34,8 @@ stages:
     deps:
     - path: data/
       hash: md5
-      md5: ac4cae4145e184d4f38ab8ad3679cd2f.dir
-      size: 317634134
+      md5: d57da1fd4b92fe4b2d05322925830e77.dir
+      size: 317628261
       nfiles: 7
     - path: mlops/data_preprocessing.py
       hash: md5
@@ -109,8 +109,8 @@ stages:
     deps:
     - path: data/
       hash: md5
-      md5: 9dfa96ac221514f5db2a73af94f7e738.dir
-      size: 317634134
+      md5: d57da1fd4b92fe4b2d05322925830e77.dir
+      size: 317628261
       nfiles: 7
     - path: mlops/create_datasets.py
       hash: md5

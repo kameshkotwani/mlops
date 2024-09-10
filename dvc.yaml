@@ -5,30 +5,24 @@ stages:
       - mlops/download_csv.py
     params:
       - data_download.url
-    outs:
-      - data/external:
-          persist: true      
-
+    outs: []
+    
   create_datasets:
     cmd: python mlops/create_datasets.py
     deps:
       - mlops/create_datasets.py
-      - data/external
+      - data/
     params:
       - create_datasets.test_size
       - create_datasets.random_state
-    outs:
-      - data/raw:
-          persist: true    
+    outs: []
 
   data_transform:
     cmd: python mlops/data_preprocessing.py
     deps:
       - mlops/data_preprocessing.py
-      - data/raw           
-    outs:
-      - data/processed:
-          persist: true      
+      - data/
+    outs: []
 
   feature_engineering:
     cmd: python mlops/feature_engineering.py
@@ -36,18 +30,16 @@ stages:
       - feature_engineering
     deps:
       - mlops/feature_engineering.py
-      - data/processed
-    outs:
-      - data/interim
+      - data/
+    outs: []
 
   model_building:
     cmd: python mlops/train.py
     deps:
       - mlops/train.py
-      - data/interim
+      - data/
     params:
       - train.gbc_n_estimators
-
     outs:
       - models/gbc_model.pkl:
           persist: true

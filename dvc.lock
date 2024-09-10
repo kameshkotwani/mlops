@@ -11,6 +11,12 @@ stages:
       params.yaml:
         data_download.url: 
           https://raw.githubusercontent.com/campusx-official/jupyter-masterclass/main/tweet_emotions.csv
+    outs:
+    - path: data/external
+      hash: md5
+      md5: 207b9fa45c0e17579539b425c7eb1b93.dir
+      size: 3768210
+      nfiles: 1
   data_preprocess:
     cmd: python mlops/create_datasets.py
     deps:
@@ -32,15 +38,21 @@ stages:
   data_transform:
     cmd: python mlops/data_preprocessing.py
     deps:
-    - path: data/
+    - path: data/raw
       hash: md5
-      md5: bbb151f793faef7c8b9d9bba08ad50ce.dir
-      size: 317628261
-      nfiles: 7
+      md5: 2d655cbffb9458a92350a48921896c05.dir
+      size: 827973
+      nfiles: 2
     - path: mlops/data_preprocessing.py
       hash: md5
       md5: 35e68ded5ba66ff6d1e23be7e5c89c1f
       size: 3231
+    outs:
+    - path: data/processed
+      hash: md5
+      md5: 94c0aa98c1e7cbfa676d798e46764dcd.dir
+      size: 572486
+      nfiles: 2
   feature_engineering:
     cmd: python mlops/feature_engineering.py
     deps:
@@ -57,14 +69,20 @@ stages:
       params.yaml:
         feature_engineering:
           cv_max_features: 7500
+    outs:
+    - path: data/interim
+      hash: md5
+      md5: 82a8b6092c53d01f0cc31285435bd104.dir
+      size: 312454402
+      nfiles: 2
   model_building:
     cmd: python mlops/train.py
     deps:
-    - path: data/
+    - path: data/interim
       hash: md5
-      md5: 08f10779139dc0e13644cd2b5ea82653.dir
-      size: 317623071
-      nfiles: 7
+      md5: 82a8b6092c53d01f0cc31285435bd104.dir
+      size: 312454402
+      nfiles: 2
     - path: mlops/train.py
       hash: md5
       md5: 9a8b2d4726f0135740c81bab58a2f703
@@ -75,8 +93,8 @@ stages:
     outs:
     - path: models/gbc_model.pkl
       hash: md5
-      md5: a07bdbc3850301cb7077084da1e8fd5c
-      size: 85054
+      md5: c7fc13a38983999f6002eb739a9d0c19
+      size: 85630
   model_prediction:
     cmd: python mlops/predict.py
     deps:
@@ -97,21 +115,21 @@ stages:
       size: 1093
     - path: models/gbc_model.pkl
       hash: md5
-      md5: a07bdbc3850301cb7077084da1e8fd5c
-      size: 85054
+      md5: c7fc13a38983999f6002eb739a9d0c19
+      size: 85630
     outs:
     - path: reports/metrics_gbc.json
       hash: md5
-      md5: 3753eebe2a6b93c927e9e6e40da32ab2
+      md5: 56a4e6e58219efe96e88e37631ae5ccc
       size: 336
   create_datasets:
     cmd: python mlops/create_datasets.py
     deps:
-    - path: data/raw
+    - path: data/external
       hash: md5
-      md5: 2d655cbffb9458a92350a48921896c05.dir
-      size: 827973
-      nfiles: 2
+      md5: 207b9fa45c0e17579539b425c7eb1b93.dir
+      size: 3768210
+      nfiles: 1
     - path: mlops/create_datasets.py
       hash: md5
       md5: 1627a0f0fced995ada21b61079daf537
@@ -120,3 +138,9 @@ stages:
       params.yaml:
         create_datasets.random_state: 47
         create_datasets.test_size: 0.4
+    outs:
+    - path: data/raw
+      hash: md5
+      md5: 2d655cbffb9458a92350a48921896c05.dir
+      size: 827973
+      nfiles: 2

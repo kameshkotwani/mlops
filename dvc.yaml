@@ -5,24 +5,27 @@ stages:
       - mlops/download_csv.py
     params:
       - data_download.url
-    outs: []
-    
+    outs:
+      - data/external  # Output of this stage
+
   create_datasets:
     cmd: python mlops/create_datasets.py
     deps:
       - mlops/create_datasets.py
-      - data/raw
+      - data/external  # Input from previous stage
     params:
       - create_datasets.test_size
       - create_datasets.random_state
-    outs: []
+    outs:
+      - data/raw  # Output of this stage
 
   data_transform:
     cmd: python mlops/data_preprocessing.py
     deps:
       - mlops/data_preprocessing.py
-      - data/
-    outs: []
+      - data/raw  # Input from previous stage
+    outs:
+      - data/processed  # Output of this stage
 
   feature_engineering:
     cmd: python mlops/feature_engineering.py
@@ -30,24 +33,25 @@ stages:
       - feature_engineering
     deps:
       - mlops/feature_engineering.py
-      - data/processed
-    outs: []
+      - data/processed  # Input from previous stage
+    outs:
+      - data/interim  # Output of this stage
 
   model_building:
     cmd: python mlops/train.py
     deps:
       - mlops/train.py
-      - data/
+      - data/interim  # Input from previous stage
     params:
       - train.gbc_n_estimators
     outs:
-      - models/gbc_model.pkl:
+      - models/gbc_model.pkl:  # Final model output
           persist: true
 
   model_evaluation:
     cmd: python mlops/evaluation.py
     deps:
       - mlops/evaluation.py
-      - models/gbc_model.pkl
+      - models/gbc_model.pkl  # Input from previous stage (trained model)
     metrics:
-      - reports/metrics_gbc.json
+      - reports/metrics_gbc.json  # Model evaluation metrics

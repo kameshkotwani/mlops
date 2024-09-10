@@ -44,11 +44,11 @@ stages:
   feature_engineering:
     cmd: python mlops/feature_engineering.py
     deps:
-    - path: data/
+    - path: data/processed
       hash: md5
-      md5: d57da1fd4b92fe4b2d05322925830e77.dir
-      size: 317628261
-      nfiles: 7
+      md5: da683c5e7baf90100ac59fccbba5ebce.dir
+      size: 572486
+      nfiles: 2
     - path: mlops/feature_engineering.py
       hash: md5
       md5: bbdcd610381cc97491c883dc212afe98
@@ -107,11 +107,11 @@ stages:
   create_datasets:
     cmd: python mlops/create_datasets.py
     deps:
-    - path: data/
+    - path: data/raw
       hash: md5
-      md5: d57da1fd4b92fe4b2d05322925830e77.dir
-      size: 317628261
-      nfiles: 7
+      md5: e728e0df6c20f028a1d8bd0ce7248f44.dir
+      size: 827973
+      nfiles: 2
     - path: mlops/create_datasets.py
       hash: md5
       md5: 1627a0f0fced995ada21b61079daf537

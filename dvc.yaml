@@ -11,7 +11,7 @@ stages:
     cmd: python mlops/create_datasets.py
     deps:
       - mlops/create_datasets.py
-      - data/
+      - data/raw
     params:
       - create_datasets.test_size
       - create_datasets.random_state
@@ -30,7 +30,7 @@ stages:
       - feature_engineering
     deps:
       - mlops/feature_engineering.py
-      - data/
+      - data/processed
     outs: []
 
   model_building:

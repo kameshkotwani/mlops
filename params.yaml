@@ -5,8 +5,7 @@ data_download:
 data_preprocessing: ~
 
 feature_engineering:
-  cv_max_features: 7500
-
+  cv_max_features: 50
 create_datasets:
   test_size: 0.4
   random_state: 47

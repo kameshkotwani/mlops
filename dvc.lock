@@ -68,20 +68,20 @@ stages:
     params:
       params.yaml:
         feature_engineering:
-          cv_max_features: 50
+          cv_max_features: 51
     outs:
     - path: data/interim
       hash: md5
-      md5: 261d372600fc13b0a0787357f7421531.dir
-      size: 1068816
+      md5: 86488cac0c80ed0f7eab30e556717754.dir
+      size: 1089570
       nfiles: 2
   model_building:
     cmd: python mlops/train.py
     deps:
     - path: data/interim
       hash: md5
-      md5: 261d372600fc13b0a0787357f7421531.dir
-      size: 1068816
+      md5: 86488cac0c80ed0f7eab30e556717754.dir
+      size: 1089570
       nfiles: 2
     - path: mlops/train.py
       hash: md5
@@ -93,8 +93,8 @@ stages:
     outs:
     - path: models/gbc_model.pkl
       hash: md5
-      md5: 0442efd534a0396439faa517b730abc2
-      size: 87740
+      md5: a6f20e0ea738ae170161343045e8eb92
+      size: 87580
   model_prediction:
     cmd: python mlops/predict.py
     deps:
@@ -115,8 +115,8 @@ stages:
       size: 1093
     - path: models/gbc_model.pkl
       hash: md5
-      md5: 0442efd534a0396439faa517b730abc2
-      size: 87740
+      md5: a6f20e0ea738ae170161343045e8eb92
+      size: 87580
     outs:
     - path: reports/metrics_gbc.json
       hash: md5
